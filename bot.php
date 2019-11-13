@@ -14,7 +14,7 @@ $request_array = json_decode($request, true);   // Decode JSON to Array
 $content = file_get_contents('php://input');
 $arrJson = json_decode($content, true);
 
-
+/*
 function send_reply_message($url, $post_header, $post_body)
 {
     $ch = curl_init($url);
@@ -28,7 +28,7 @@ function send_reply_message($url, $post_header, $post_body)
 
     return $result;
 }
-
+*/
  
 $arrHeader = array();
 $arrHeader[] = "Content-Type: application/json";
@@ -80,5 +80,14 @@ echo "OK";
 
 */
 
-
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL,$strUrl);
+curl_setopt($ch, CURLOPT_HEADER, false);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($arrPostData));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+$result = curl_exec($ch);
+curl_close ($ch);
 ?>
