@@ -1,6 +1,6 @@
 <?php
 
-
+$strUrl = "https://api.line.me/v2/bot/message/reply";
 $API_URL = 'https://api.line.me/v2/bot/message';
 $ACCESS_TOKEN = 'LUY9MGaOSmrnBwn2UpZaKvmHDg89+vwbos8FFmnyC3olZsS+2z/fwAsafchAQfSoF+8BXszRa2I0K8W5zFxeHJPaxO74swjn8DQyRxOvOFiyRdxa7xjvnjPixSa4sB+47Ht2wF54VA/5vrNqUoTLkwdB04t89/1O/w1cDnyilFU='; 
 $channelSecret = 'fd062a3c11fd035323dd6a4cd52b8e0a';
@@ -9,7 +9,7 @@ $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' 
 
 $request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($request, true);   // Decode JSON to Array
-
+/*
 function send_reply_message($url, $post_header, $post_body)
 {
     $ch = curl_init($url);
@@ -23,6 +23,7 @@ function send_reply_message($url, $post_header, $post_body)
 
     return $result;
 }
+*/
 /*
 if ( sizeof($request_array['events']) > 0 ) {
 
@@ -69,6 +70,16 @@ if($request_array['events'][0]['message']['text'] == "สวัสดี"){
   $arrPostData['messages'][0]['type'] = "text";
   $arrPostData['messages'][0]['text'] = "ฉันไม่เข้าใจคำสั่ง";
 }
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL,$strUrl);
+curl_setopt($ch, CURLOPT_HEADER, false);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $POST_HEADER);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($arrPostData));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+$result = curl_exec($ch);
+curl_close ($ch);
 
 echo "OK";
 ?>
